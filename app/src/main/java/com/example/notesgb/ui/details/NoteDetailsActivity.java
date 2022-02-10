@@ -30,7 +30,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
 
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, NoteDetailsFragment.newInstance(note))
+                    .replace(R.id.fragment_container_list, NoteDetailsFragment.newInstance(note))
                     .commit();
         }
     }

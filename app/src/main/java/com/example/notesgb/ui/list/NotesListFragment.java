@@ -1,5 +1,6 @@
 package com.example.notesgb.ui.list;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,9 @@ public class NotesListFragment extends Fragment implements NotesListView {
 
     private LinearLayout container;
     private NotesListPresenter presenter;
+
+    public static final String SELECTED_NOTE_BUNDLE = "SELECTED_NOTE_BUNDLE";
+    public static final String NOTE_SELECTED = "NOTE_SELECTED";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +57,17 @@ public class NotesListFragment extends Fragment implements NotesListView {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    NoteDetailsActivity.show(requireContext(),note);
+
+                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable(SELECTED_NOTE_BUNDLE, note);
+
+                        getParentFragmentManager()
+                                .setFragmentResult(NOTE_SELECTED, bundle);
+                    } else {
+                        NoteDetailsActivity.show(requireContext(), note);
+                    }
+
                 }
             });
 
