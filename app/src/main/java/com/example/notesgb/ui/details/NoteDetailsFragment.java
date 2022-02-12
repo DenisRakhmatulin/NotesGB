@@ -18,6 +18,7 @@ import com.example.notesgb.ui.list.NotesListFragment;
 
 public class NoteDetailsFragment extends Fragment {
 
+    public static final String TAG = "NoteDetailsFragment";
     private static final String ARG_NOTE = "ARG_NOTE";
     private EditText date;
     private TextView name;
@@ -46,14 +47,25 @@ public class NoteDetailsFragment extends Fragment {
         name = view.findViewById(R.id.name);
         content = view.findViewById(R.id.content);
 
-        getParentFragmentManager()
-                .setFragmentResultListener(NotesListFragment.NOTE_SELECTED, getViewLifecycleOwner(), new FragmentResultListener() {
-                    @Override
-                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        Note note = result.getParcelable(NotesListFragment.SELECTED_NOTE_BUNDLE);
-                        updateNote(note);
-                    }
-                });
+        view.findViewById(R.id.remove).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                getParentFragmentManager()
+                        .popBackStack();
+
+                /*Fragment fragment = getParentFragmentManager().findFragmentByTag(NoteDetailsFragment.TAG);
+
+                if(fragment != null){
+                    getParentFragmentManager()
+                            .beginTransaction()
+                            .remove(fragment)
+                            .commit();
+                }*/
+
+            }
+        });
+
 
         Bundle arguments = getArguments();
         if (arguments != null && arguments.containsKey(ARG_NOTE)) {

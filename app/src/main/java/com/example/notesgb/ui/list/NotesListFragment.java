@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import com.example.notesgb.R;
 import com.example.notesgb.domain.Note;
 import com.example.notesgb.domain.NotesRepositoryImpl;
-import com.example.notesgb.ui.details.NoteDetailsActivity;
 
 import java.util.List;
 
@@ -58,15 +57,13 @@ public class NotesListFragment extends Fragment implements NotesListView {
                 @Override
                 public void onClick(View view) {
 
-                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                        Bundle bundle = new Bundle();
-                        bundle.putParcelable(SELECTED_NOTE_BUNDLE, note);
 
-                        getParentFragmentManager()
-                                .setFragmentResult(NOTE_SELECTED, bundle);
-                    } else {
-                        NoteDetailsActivity.show(requireContext(), note);
-                    }
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(SELECTED_NOTE_BUNDLE, note);
+
+                    getParentFragmentManager()
+                            .setFragmentResult(NOTE_SELECTED, bundle);
+
 
                 }
             });
