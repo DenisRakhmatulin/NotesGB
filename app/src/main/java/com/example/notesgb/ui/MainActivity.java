@@ -1,8 +1,10 @@
-package com.example.notesgb;
+package com.example.notesgb.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.notesgb.R;
 
 public class MainActivity extends AppCompatActivity {
 
