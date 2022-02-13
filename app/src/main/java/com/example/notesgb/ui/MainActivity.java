@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.example.notesgb.R;
 import com.example.notesgb.domain.Note;
 import com.example.notesgb.ui.details.NoteDetailsFragment;
+import com.example.notesgb.ui.dialogs.AddNoteFragment;
 import com.example.notesgb.ui.list.NotesListFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,13 +30,19 @@ public class MainActivity extends AppCompatActivity {
                         .addToBackStack("backstack1")
                         .commit();
 
-
-
-
-
-
             }
         });
 
-    }
+        getSupportFragmentManager().setFragmentResultListener(NotesListFragment.ARG_ADD, this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, AddNoteFragment.newInstance())
+                        .addToBackStack("backstack2")
+                        .commit();
+            }
+    });
+
+}
 }

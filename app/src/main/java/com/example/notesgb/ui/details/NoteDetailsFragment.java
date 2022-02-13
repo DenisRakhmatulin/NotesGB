@@ -54,15 +54,6 @@ public class NoteDetailsFragment extends Fragment {
                 getParentFragmentManager()
                         .popBackStack();
 
-                /*Fragment fragment = getParentFragmentManager().findFragmentByTag(NoteDetailsFragment.TAG);
-
-                if(fragment != null){
-                    getParentFragmentManager()
-                            .beginTransaction()
-                            .remove(fragment)
-                            .commit();
-                }*/
-
             }
         });
 

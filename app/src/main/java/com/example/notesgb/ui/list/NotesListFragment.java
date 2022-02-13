@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import com.example.notesgb.R;
 import com.example.notesgb.domain.Note;
 import com.example.notesgb.domain.NotesRepositoryImpl;
+import com.example.notesgb.ui.dialogs.AddNoteFragment;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 
@@ -24,8 +26,11 @@ public class NotesListFragment extends Fragment implements NotesListView {
     private LinearLayout container;
     private NotesListPresenter presenter;
 
-    public static final String SELECTED_NOTE_BUNDLE = "SELECTED_NOTE_BUNDLE";
+    public static final String ADD_PRESSED_BUNDLE = "ADD_PRESSED_BUNDLE";
     public static final String NOTE_SELECTED = "NOTE_SELECTED";
+
+    public static final String SELECTED_NOTE_BUNDLE = "SELECTED_NOTE_BUNDLE";
+    public static final String ARG_ADD = "ARG_ADD";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +50,18 @@ public class NotesListFragment extends Fragment implements NotesListView {
 
         container = view.findViewById(R.id.container);
         presenter.requestNotes();
+
+        MaterialButton addBtn = view.findViewById(R.id.add_btn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+
+                getParentFragmentManager()
+                        .setFragmentResult(ARG_ADD, bundle);
+            }
+        });
 
     }
 
@@ -77,5 +94,8 @@ public class NotesListFragment extends Fragment implements NotesListView {
             container.addView(itemView);
         }
 
+
     }
+
+
 }

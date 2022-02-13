@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">NotesGB</string>
     <string name="remove">Back</string>
+    <string name="add_btn">Add</string>
+    <string name="finish">FINISH</string>
+    <string name="set_date">Set date in 00/00/0000 format</string>
+    <string name="set_name">Name this note</string>
+    <string name="set_content">Add content</string>
 </resources>
