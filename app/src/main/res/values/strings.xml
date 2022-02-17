@@ -6,4 +6,14 @@
     <string name="set_date">Set date in 00/00/0000 format</string>
     <string name="set_name">Name this note</string>
     <string name="set_content">Add content</string>
+    <string name="remove_menu">Delete all</string>
+    <string name="toolbar_title">My notes</string>
+    <string name="toolbar_details_title">Note details</string>
+    <string name="toolbar_add_title">Add note</string>
+    <string name="preferences">Preferences</string>
+    <string name="search_text">search</string>
+    <string name="notes_list">Notes list</string>
+    <string name="nav_drawer_header">Smart notebook</string>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
 </resources>
