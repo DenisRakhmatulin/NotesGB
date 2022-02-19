@@ -10,10 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.notesgb.R;
-import com.example.notesgb.ui.MainActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-
-import java.util.Objects;
 
 public class ExitBottomSheetDialogFragment extends BottomSheetDialogFragment {
     public static ExitBottomSheetDialogFragment newInstance() {
@@ -38,9 +35,8 @@ public class ExitBottomSheetDialogFragment extends BottomSheetDialogFragment {
         view.findViewById(R.id.exit_yes_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(requireContext(), "Application \"NotesGB\" closed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), R.string.exit_message, Toast.LENGTH_SHORT).show();
                 requireActivity().finishAffinity();
-                System.exit(0);
             }
         });
 
