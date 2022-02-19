@@ -12,12 +12,14 @@ import androidx.fragment.app.FragmentResultListener;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.notesgb.R;
 import com.example.notesgb.domain.Note;
 import com.example.notesgb.ui.details.NoteDetailsFragment;
 import com.example.notesgb.ui.dialogs.AddNoteFragment;
+import com.example.notesgb.ui.dialogs.ExitBottomSheetDialogFragment;
 import com.example.notesgb.ui.list.NotesListFragment;
 import com.google.android.material.navigation.NavigationView;
 
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavDrawerable {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(item.getItemId() == R.id.action_notes){
+                if (item.getItemId() == R.id.action_notes) {
 
                     getSupportFragmentManager()
                             .beginTransaction()
@@ -48,12 +50,13 @@ public class MainActivity extends AppCompatActivity implements NavDrawerable {
                     return true;
                 }
 
-                if(item.getItemId() == R.id.action_preferences){
+                if (item.getItemId() == R.id.action_preferences) {
 
-                    Toast.makeText(MainActivity.this,"Preferences will be here soon", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Preferences will be here soon", Toast.LENGTH_SHORT).show();
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.container, new Fragment())
+                            .addToBackStack("backstack1")
                             .commit();
 
                     drawerLayout.closeDrawer(GravityCompat.START);
@@ -62,14 +65,23 @@ public class MainActivity extends AppCompatActivity implements NavDrawerable {
 
                 }
 
-                if(item.getItemId() == R.id.action_search){
+                if (item.getItemId() == R.id.action_search) {
 
-                    Toast.makeText(MainActivity.this,"Search will be here soon", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Search will be here soon", Toast.LENGTH_SHORT).show();
 
                     drawerLayout.closeDrawer(GravityCompat.START);
 
                     return true;
                 }
+
+                if (item.getItemId() == R.id.action_exit) {
+
+                    ExitBottomSheetDialogFragment.newInstance().show(getSupportFragmentManager(), "ExitBottomSheetDialogFragment");
+                    drawerLayout.closeDrawer(GravityCompat.START);
+
+                    return true;
+                }
+
                 return false;
             }
         });
