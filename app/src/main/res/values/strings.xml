@@ -16,4 +16,7 @@
     <string name="nav_drawer_header">Smart notebook</string>
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
+    <string name="exit_dialog_title">Do you really want to exit?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
 </resources>
