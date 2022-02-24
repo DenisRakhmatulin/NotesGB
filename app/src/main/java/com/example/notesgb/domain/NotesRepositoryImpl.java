@@ -1,6 +1,7 @@
 package com.example.notesgb.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,11 +17,11 @@ public class NotesRepositoryImpl implements NotesRepository{
     public List<Note> getNotes() {
 
         ArrayList<Note> notes = new ArrayList<>();
-        notes.add(new Note(UUID.randomUUID().toString(), "Note # 1", "Drink whisky", "31/12/2021"));
-        notes.add(new Note(UUID.randomUUID().toString(), "Note # 2", "Close the door", "10/01/2022"));
-        notes.add(new Note(UUID.randomUUID().toString(), "Note # 3", "Feed the cat", "11/02/2022"));
-        notes.add(new Note(UUID.randomUUID().toString(), "Note # 4", "Daughter's birthday", "17/04/2022"));
-        notes.add(new Note(UUID.randomUUID().toString(), "Note # 5", "Wife's birthday", "18/10/2022"));
+        notes.add(new Note(UUID.randomUUID().toString(), "Note # 1", "Drink whisky", new Date()));
+        notes.add(new Note(UUID.randomUUID().toString(), "Note # 2", "Close the door", new Date()));
+        notes.add(new Note(UUID.randomUUID().toString(), "Note # 3", "Feed the cat", new Date()));
+        notes.add(new Note(UUID.randomUUID().toString(), "Note # 4", "Daughter's birthday", new Date()));
+        notes.add(new Note(UUID.randomUUID().toString(), "Note # 5", "Wife's birthday", new Date()));
 
         return notes;
 

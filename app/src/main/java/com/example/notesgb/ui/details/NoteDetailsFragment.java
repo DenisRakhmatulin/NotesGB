@@ -21,6 +21,9 @@ import com.example.notesgb.ui.MainActivity;
 import com.example.notesgb.ui.NavDrawerable;
 import com.example.notesgb.ui.list.NotesListFragment;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 public class NoteDetailsFragment extends Fragment {
 
     public static final String TAG = "NoteDetailsFragment";
@@ -28,6 +31,7 @@ public class NoteDetailsFragment extends Fragment {
     private EditText date;
     private TextView name;
     private EditText content;
+    private SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
 
 
     public static NoteDetailsFragment newInstance(Note note) {
@@ -83,8 +87,8 @@ public class NoteDetailsFragment extends Fragment {
     }
 
     private void updateNote(Note note) {
-
-        date.setText(note.getDate());
+        
+        date.setText(format.format(note.getDate()));
         name.setText(note.getName());
         content.setText(note.getContent());
 
