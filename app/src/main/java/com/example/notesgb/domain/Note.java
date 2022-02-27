@@ -3,13 +3,15 @@ package com.example.notesgb.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Note implements Parcelable {
+import java.util.Date;
+
+public class Note implements Parcelable{
     private final String id;
     private final String name;
     private final String content;
-    private final String date;
+    private Date date;
 
-    public Note(String id, String name, String content, String date) {
+    public Note(String id, String name, String content, Date date) {
         this.id = id;
         this.name = name;
         this.content = content;
@@ -20,7 +22,6 @@ public class Note implements Parcelable {
         id = in.readString();
         name = in.readString();
         content = in.readString();
-        date = in.readString();
     }
 
     public static final Creator<Note> CREATOR = new Creator<Note>() {
@@ -35,20 +36,6 @@ public class Note implements Parcelable {
         }
     };
 
-    public String getId() {
-        return id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getName() { return name; }
-
     @Override
     public int describeContents() {
         return 0;
@@ -59,6 +46,21 @@ public class Note implements Parcelable {
         parcel.writeString(id);
         parcel.writeString(name);
         parcel.writeString(content);
-        parcel.writeString(date);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public Date getDate() {
+        return date;
     }
 }
