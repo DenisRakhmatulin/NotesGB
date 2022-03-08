@@ -4,12 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Date;
+import java.util.Objects;
 
-public class Note implements Parcelable{
+public class Note implements Parcelable {
     private final String id;
     private final String name;
     private final String content;
-    private Date date;
+    private final Date date;
 
     public Note(String id, String name, String content, Date date) {
         this.id = id;
@@ -22,6 +23,7 @@ public class Note implements Parcelable{
         id = in.readString();
         name = in.readString();
         content = in.readString();
+        date = (Date) in.readSerializable();
     }
 
     public static final Creator<Note> CREATOR = new Creator<Note>() {
@@ -46,6 +48,7 @@ public class Note implements Parcelable{
         parcel.writeString(id);
         parcel.writeString(name);
         parcel.writeString(content);
+        parcel.writeSerializable(date);
     }
 
     public String getId() {
@@ -63,4 +66,19 @@ public class Note implements Parcelable{
     public Date getDate() {
         return date;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Note note = (Note) o;
+        return Objects.equals(id, note.id) && Objects.equals(name, note.name) && Objects.equals(content, note.content) && Objects.equals(date, note.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, content, date);
+    }
+
+
 }
