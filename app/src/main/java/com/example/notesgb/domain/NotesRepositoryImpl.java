@@ -113,7 +113,7 @@ public class NotesRepositoryImpl implements NotesRepository {
 
 
     @Override
-    public Note update(String id, String newTitle, String newContent) {
+    public void update(String id, String newTitle, String newContent, Callback<Note> callback) {
 
         Note toChange = null;
         int indexToChange = -1;
@@ -130,7 +130,7 @@ public class NotesRepositoryImpl implements NotesRepository {
 
         notes.set(indexToChange, newNote);
 
-        return newNote;
+        callback.onSuccess(newNote);
 
     }
 }

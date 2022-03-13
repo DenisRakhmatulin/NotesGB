@@ -37,20 +37,6 @@ public class NotesListPresenter {
 
 
 
-    public void addItem() {
-        view.showProgress();
-
-        repository.add("Added title", "Added content", new Callback<Note>() {
-            @Override
-            public void onSuccess(Note data) {
-                view.hideProgress();
-
-                view.addNote(data);
-            }
-        });
-
-    }
-
     public void deleteItem() {
         view.showProgress();
 
