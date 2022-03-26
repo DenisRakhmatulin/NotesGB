@@ -9,18 +9,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.notesgb.R;
 import com.example.notesgb.domain.Note;
 import com.example.notesgb.ui.details.NoteDetailsFragment;
-import com.example.notesgb.ui.dialogs.AddNoteFragment;
 import com.example.notesgb.ui.dialogs.ExitBottomSheetDialogFragment;
 import com.example.notesgb.ui.list.NotesListFragment;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavDrawerable {
@@ -32,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements NavDrawerable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(savedInstanceState == null){
+            openNotes();
+        }
 
         drawerLayout = findViewById(R.id.drawer);
         NavigationView navigationView = findViewById(R.id.navigation);
@@ -40,10 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavDrawerable {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.action_notes) {
 
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.container, new NotesListFragment())
-                            .commit();
+                    openNotes();
 
                     drawerLayout.closeDrawer(GravityCompat.START);
 
@@ -101,16 +100,13 @@ public class MainActivity extends AppCompatActivity implements NavDrawerable {
             }
         });
 
-        getSupportFragmentManager().setFragmentResultListener(NotesListFragment.ARG_ADD, this, new FragmentResultListener() {
+        getSupportFragmentManager().setFragmentResultListener(AuthFragment.KEY_AUTHORIZED, this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.container, AddNoteFragment.newInstance())
-                        .addToBackStack("backstack2")
-                        .commit();
+                openNotes();
             }
         });
+
 
     }
 
@@ -125,5 +121,23 @@ public class MainActivity extends AppCompatActivity implements NavDrawerable {
         );
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+    }
+
+    private void openNotes() {
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+        if (account == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, new AuthFragment())
+                    .commit();
+
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, new NotesListFragment())
+                    .commit();
+        }
     }
 }

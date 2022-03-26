@@ -18,11 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notesgb.R;
 import com.example.notesgb.domain.Callback;
+import com.example.notesgb.domain.FirestoreNotesRepository;
 import com.example.notesgb.domain.Note;
 import com.example.notesgb.domain.NotesRepository;
 import com.example.notesgb.domain.NotesRepositoryImpl;
 import com.example.notesgb.ui.NavDrawerable;
+import com.example.notesgb.ui.edit.AddNotePresenter;
 import com.example.notesgb.ui.edit.EditNoteBottomSheetDialogFragment;
+import com.example.notesgb.ui.edit.EditNotePresenter;
 
 import java.util.List;
 
@@ -47,7 +50,7 @@ public class NotesListFragment extends Fragment implements NotesListView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        presenter = new NotesListPresenter(this, NotesRepositoryImpl.getInstance());
+        presenter = new NotesListPresenter(this, FirestoreNotesRepository.INSTANCE);
 
         list = view.findViewById(R.id.list);
 
@@ -80,13 +83,13 @@ public class NotesListFragment extends Fragment implements NotesListView {
         view.findViewById(R.id.add_note).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.addItem();
-
+                EditNoteBottomSheetDialogFragment.newAddInstance()
+                        .show(getParentFragmentManager(), "EditNoteBottomSheetDialogFragment");
 
             }
         });
 
-        getParentFragmentManager().setFragmentResultListener(EditNoteBottomSheetDialogFragment.KEY_REQUEST, getViewLifecycleOwner(), new FragmentResultListener() {
+        getParentFragmentManager().setFragmentResultListener(EditNotePresenter.KEY_UPDATE, getViewLifecycleOwner(), new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 Note note = result.getParcelable(EditNoteBottomSheetDialogFragment.ARG_NOTE);
@@ -94,6 +97,20 @@ public class NotesListFragment extends Fragment implements NotesListView {
                 adapter.updateItem(note, presenter.getSelectedNoteIndex());
 
                 adapter.notifyItemChanged(presenter.getSelectedNoteIndex());
+            }
+        });
+
+        getParentFragmentManager().setFragmentResultListener(AddNotePresenter.KEY_ADD, getViewLifecycleOwner(), new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                Note note = result.getParcelable(EditNoteBottomSheetDialogFragment.ARG_NOTE);
+
+                int index = adapter.addItem(note);
+
+                adapter.notifyItemInserted(index);
+
+                list.smoothScrollToPosition(index);
+
             }
         });
 
@@ -110,7 +127,8 @@ public class NotesListFragment extends Fragment implements NotesListView {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.menu_add) {
-                    presenter.addItem();
+                    EditNoteBottomSheetDialogFragment.newAddInstance()
+                            .show(getParentFragmentManager(), "EditNoteBottomSheetDialogFragment");
                     return true;
                 }
                 if (item.getItemId() == R.id.menu_remove) {
@@ -136,7 +154,7 @@ public class NotesListFragment extends Fragment implements NotesListView {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                EditNoteBottomSheetDialogFragment.newInstance(presenter.getSelectedNote())
+                EditNoteBottomSheetDialogFragment.newUpdateInstance(presenter.getSelectedNote())
                         .show(getParentFragmentManager(), "EditNoteBottomSheetDialogFragment");
                 return true;
             case R.id.action_delete:
@@ -155,13 +173,6 @@ public class NotesListFragment extends Fragment implements NotesListView {
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void addNote(Note note) {
-        int index = adapter.addItem(note);
-        adapter.notifyItemInserted(index);
-        list.smoothScrollToPosition(index);
-
-    }
 
     @Override
     public void removeNote(Note selectedNote, int index) {
